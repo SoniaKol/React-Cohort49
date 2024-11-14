@@ -9,11 +9,13 @@ function App() {
 
   const handleSelectCategory = (category) => {
     const categoryName = category.slice(6);
-    setSelectedCategory(categoryName);
+    setSelectedCategory((prevCategory) =>
+      prevCategory === categoryName ? null : categoryName
+    );
   };
 
   useEffect(() => {
-    if (selectedCategory !== null) {
+    if (selectedCategory) {
       const filteredProducts = allProducts.filter(
         (product) => product.category === selectedCategory
       );
