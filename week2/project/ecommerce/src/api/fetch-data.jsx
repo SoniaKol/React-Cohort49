@@ -6,7 +6,7 @@ const fetchHandler = async (url) => {
   return data;
 };
 
-const fetchCategories = async () => {
+const fetchCategories = () => {
   try {
     const url = `${BASE_URL}/categories`;
     return fetchHandler(url);
@@ -16,7 +16,7 @@ const fetchCategories = async () => {
   }
 };
 
-const fetchProducts = async (category) => {
+const fetchProducts = (category) => {
   try {
     if (category) {
       const url = `${BASE_URL}/category/${category}`;
@@ -30,7 +30,7 @@ const fetchProducts = async (category) => {
   }
 };
 
-const fetchProductById = async (id) => {
+const fetchProductById = (id) => {
   try {
     const url = `${BASE_URL}/${id}`;
     return fetchHandler(url);
