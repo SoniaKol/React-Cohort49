@@ -1,10 +1,15 @@
+const BASE_URL = "https://fakestoreapi.com/products";
+
+const fetchHandler = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
 const fetchCategories = async () => {
   try {
-    const response = await fetch(
-      "https://fakestoreapi.com/products/categories"
-    );
-    const data = await response.json();
-    return data;
+    const url = `${BASE_URL}/categories`;
+    return fetchHandler(url);
   } catch (error) {
     console.log("Error fetching categories:", error);
     return "error";
@@ -14,15 +19,10 @@ const fetchCategories = async () => {
 const fetchProducts = async (category) => {
   try {
     if (category) {
-      const response = await fetch(
-        `https://fakestoreapi.com/products/category/${category}`
-      );
-      const data = await response.json();
-      return data;
+      const url = `${BASE_URL}/category/${category}`;
+      return fetchHandler(url);
     } else {
-      const response = await fetch(`https://fakestoreapi.com/products`);
-      const data = await response.json();
-      return data;
+      return fetchHandler(BASE_URL);
     }
   } catch (error) {
     console.log("Error fetching products:", error);
@@ -32,9 +32,8 @@ const fetchProducts = async (category) => {
 
 const fetchProductById = async (id) => {
   try {
-    const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-    const data = await response.json();
-    return data;
+    const url = `${BASE_URL}/${id}`;
+    return fetchHandler(url);
   } catch (error) {
     console.log("Error fetching product by id:", error);
     return "error";
