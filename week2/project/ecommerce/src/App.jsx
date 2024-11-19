@@ -1,27 +1,29 @@
 import { useState, useEffect } from "react";
-import allProducts from "./fake-data/all-products";
 import Categories from "./components/Categories";
 import ProductsList from "./components/ProductsList";
+import { fetchProducts } from "./api/fetch-data";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [products, setProducts] = useState(allProducts);
+  const [products, setProducts] = useState([]);
 
   const handleSelectCategory = (category) => {
-    const categoryName = category.slice(6);
     setSelectedCategory((prevCategory) =>
-      prevCategory === categoryName ? null : categoryName
+      prevCategory === category ? null : category
     );
   };
 
   useEffect(() => {
+    setProducts([]);
+
     if (selectedCategory) {
-      const filteredProducts = allProducts.filter(
-        (product) => product.category === selectedCategory
-      );
-      setProducts(filteredProducts);
+      fetchProducts(selectedCategory).then((data) => {
+        setProducts(data);
+      });
     } else {
-      setProducts(allProducts);
+      fetchProducts().then((data) => {
+        setProducts(data);
+      });
     }
   }, [selectedCategory]);
 
